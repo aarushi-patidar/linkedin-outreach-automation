@@ -6,16 +6,19 @@
   "scripts": {
     "start": "ts-node src/index.ts",
     "run": "ts-node src/index.ts",
-    "chrome": "powershell -ExecutionPolicy Bypass -File scripts/start-chrome.ps1",
     "build": "tsc",
     "typecheck": "tsc --noEmit"
   },
-  "keywords": ["linkedin", "outreach", "playwright"],
+  "keywords": [
+    "linkedin",
+    "outreach",
+    "playwright"
+  ],
   "license": "UNLICENSED",
   "dependencies": {
     "chalk": "^4.1.2",
     "csv-parser": "^3.2.0",
-    "dotenv": "^16.4.7",
+    "dotenv": "^16.6.1",
     "playwright": "^1.49.1"
   },
   "devDependencies": {

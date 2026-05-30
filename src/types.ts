@@ -31,37 +31,14 @@ export interface MessageBuildResult {
 
 export type BrowserChannel = "chrome" | "msedge";
 
-export type AuthMode = "cdp" | "profile" | "cookies";
-
 export interface ServiceConfig {
-  /** cdp = attach to your Chrome (most reliable); profile = Playwright profile dir; cookies = inject li_at */
-  authMode?: AuthMode;
-  /** Chrome DevTools endpoint when authMode is cdp (default http://127.0.0.1:9222). */
-  cdpUrl?: string;
-  /** Directory for persistent Chrome profile (used when authMode is profile). */
   profileDir?: string;
-  /** How long to wait for manual login on first profile run (ms). */
-  manualLoginTimeoutMs?: number;
-  liAtCookie?: string;
-  /** JSON file with all linkedin.com cookies (Cookie-Editor export). */
-  cookiesPath?: string;
-  /** Playwright storageState JSON saved from an authenticated session. */
-  storageStatePath?: string;
   headless?: boolean;
-  /** Use installed Chrome/Edge instead of Playwright-bundled Chromium. */
   browserChannel?: BrowserChannel;
-  actionDelayMinMs?: number;
-  actionDelayMaxMs?: number;
-  profileDelayMinMs?: number;
-  profileDelayMaxMs?: number;
-  typeDelayMinMs?: number;
-  typeDelayMaxMs?: number;
 }
 
 export interface RunOptions {
-  /** Stop after N successful sends (optional cap for testing). */
   maxSuccesses?: number;
-  /** Continue on per-row errors (default true). */
   continueOnError?: boolean;
 }
 
@@ -97,17 +74,6 @@ export interface LinkedInOutreachServiceEvents {
   error: (error: Error) => void;
 }
 
-export type LinkedInOutreachEmitter = EventEmitter & {
-  on<U extends keyof LinkedInOutreachServiceEvents>(
-    event: U,
-    listener: LinkedInOutreachServiceEvents[U]
-  ): LinkedInOutreachEmitter;
-  emit<U extends keyof LinkedInOutreachServiceEvents>(
-    event: U,
-    ...args: Parameters<LinkedInOutreachServiceEvents[U]>
-  ): boolean;
-};
-
 export const LINKEDIN_NOTE_MAX_LENGTH = 300;
 
 export const CAMPAIGN_TYPES: readonly CampaignType[] = [
@@ -115,3 +81,10 @@ export const CAMPAIGN_TYPES: readonly CampaignType[] = [
   "Sales",
   "Custom",
 ] as const;
+
+export const DELAYS = {
+  openProfile: 3_000,
+  connectFlow: 4_000,
+  messageConnected: 2_500,
+  nextProfile: 5_000,
+} as const;
